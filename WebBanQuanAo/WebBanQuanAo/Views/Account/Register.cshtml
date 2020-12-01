@@ -1,0 +1,10 @@
+﻿@model WebBanQuanAo.Class.Register
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "RegForm" }))
+{
+    @Html.Action("Input_Customer", "Account");
+    @Html.Action("Input_Account", "Account");
+    <button type="submit" class="btn">Login</button>
+}
+

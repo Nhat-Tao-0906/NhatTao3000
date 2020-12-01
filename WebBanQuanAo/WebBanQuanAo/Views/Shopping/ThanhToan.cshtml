@@ -1,0 +1,177 @@
+﻿@using WebBanQuanAo.Class;
+
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+    <div class="row"  style="align-items:unset">
+        <div class="col-lg-6 col-md-12">
+            @*Thong tin khach hang*@
+            <div class="container-fluid">
+                @using (Html.BeginForm("ThanhToan", "Shopping"))
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Thông tin giao hàng</h3>
+                            <div class="form-group">
+                                <input style="border-radius:4px; height:40px;" name="Name" type="text" class="form-control" placeholder="Họ và tên" value="">
+                                @if(ViewBag.errorName != null){
+                                    <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorName</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <input style="border-radius:4px; height:40px;" name="Email" type="text" class="form-control" placeholder="Email">
+                                @if (ViewBag.errorEmail != null)
+                                {
+                                    <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorEmail</div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input style="border-radius:4px; height:40px;" name="Phone" type="text" class="form-control" placeholder="Số điện thoại">
+                                @if (ViewBag.errorPhone != null)
+                                {
+                                    <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorPhone</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input style="border-radius:4px; height:40px;" name="Address" type="text" class="form-control" placeholder="Địa chỉ">
+                                @if (ViewBag.errorAddress != null)
+                                {
+                                    <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorAddress</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <input style="height:20px; width:65px;" type="radio" name="HinhThuc" checked="checked" value="1" /> <span>Thanh toán online</span>
+                    <br />
+                    <input style="height:20px; width:65px;" type="radio" name="HinhThuc" value="0" /> <span>Nhận hàng trả tiền</span>
+                    <div class="row" style="margin:20px 0">
+                        <div class="col-lg-6">
+                            @Html.ActionLink("<== Giỏ hàng", "GioHang", "Shopping", null, new { @style = "font-size: 15px; padding: 5px;" })
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="submit" class="btn btn-primary" value="Submit" style="background-color:rgb(21, 113, 202); border-radius: 5px; height:60px;" />
+                            @*<a href="@Url.Action("PayMent", "Shopping")">
+                                <input type="button" class="btn btn-primary" value="PayMent" style="background-color:rgb(21, 113, 202); border-radius: 5px; height:60px;" />
+                            </a>*@
+                            <input type="submit" class="btn btn-primary" value="PayMent" style="background-color:rgb(21, 113, 202); border-radius: 5px; height:60px;" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @{ 
+            List<GioHang> listgh = (List<GioHang>)Session["giohang"];
+            double total = 0;
+            double phivanchuyen = 25;
+        }
+        @*Thong tin don hang*@
+        <div class="col-lg-6 col-md-12">
+            <div class="container-fluid">
+                <h3>Thông tin đơn hàng</h3>
+                @if (listgh != null)
+                {
+                    foreach (var item in listgh)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <br />
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <img src="~/Content/Images/@item.HinhAnh" style="width:70px; height:70px; border-radius:3px; position:relative" />
+                                            <span style="width: 25px; right:20px; top:-10px; position:absolute; background-color:rgb(128, 128, 128); padding:0 8px; border-radius:30px; font-family:unset">@item.SoLuong</span>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <h3>@item.Ten</h3>
+                                            <h4>Size: @item.Size</h4>
+                                            <div>$@(string.Format("{0:#, ##0}", item.Gia))</div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div>$@(string.Format("{0:#, ##0}", (item.Gia * item.SoLuong)))</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        total += (item.Gia * item.SoLuong);
+                    }
+                }
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="container-fluid">
+                                <br />
+                                <div class="row" style="border-top:1px solid #ccc;">
+                                    <div class="col-lg-10">
+                                        <br />
+                                        <div>
+                                            Tạm tính
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div>
+                                            $@(string.Format("{0:#, ##0}", total))
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <div>
+                                            Phí vận chuyển
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div>
+                                            $@(string.Format("{0:#, ##0}", phivanchuyen))
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row" style="border-top:1px solid #ccc;">
+                                    <div class="col-lg-10">
+                                        <br />
+                                        <div>
+                                            Tổng cộng
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div>
+                                            $@(string.Format("{0:#, ##0}", phivanchuyen + total))
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />

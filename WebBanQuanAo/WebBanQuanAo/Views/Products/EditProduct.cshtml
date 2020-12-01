@@ -1,0 +1,389 @@
+﻿@*@model WebBanQuanAo.Models.Product
+
+    @{
+        ViewBag.Title = "EditProduct";
+        Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    }
+
+    <h2>EditProduct</h2>
+
+    @using (Html.BeginForm("EditProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Product</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IDProduct)
+
+
+            <div class="form-group">
+                @Html.Label("Name category", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDCategory", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NameProduct, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NameProduct, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NameProduct, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NameProduct, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image1, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input name="Image1" class="inputFile" type="file" style="display:none" id="Image1" />
+                    <label for="Image1">
+                        <img class="imageShow" id="showimage1" src="~/Content/Images/@Model.Image1" style="width:300px; height:300px;" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input name="Image2" class="inputFile" type="file" style="display:none" id="Image2" />
+                    <label for="Image2">
+                        <img class="imageShow" id="showimage2" src="~/Content/Images/@Model.Image2" style="width:300px; height:300px;" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image3, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input name="Image3" class="inputFile" type="file" style="display:none" id="Image3" />
+                    <label for="Image3">
+                        <img class="imageShow" id="showimage3" src="~/Content/Images/@Model.Image3" style="width:300px; height:300px;" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image4, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input name="Image4" class="inputFile" type="file" style="display:none" id="Image4" />
+                    <label for="Image4">
+                        <img class="imageShow" id="showimage4" src="~/Content/Images/@Model.Image4" style="width:300px; height:300px;" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image5, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input name="Image5" class="inputFile" type="file" style="display:none" id="Image5" />
+                    <label for="Image5">
+                        <img class="imageShow" id="showimage5" src="~/Content/Images/@Model.Image5" style="width:300px; height:300px;" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Thuong Hieu", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDThuongHieu", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.thuonghieu.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Chat Lieu", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDChatLieu", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.chatlieu.Ten, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @Html.Action("Size", "Products")
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImportDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ImportDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ImportDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <script>
+            var inputFile = document.querySelectorAll('.inputFile');
+            var imageShow = document.querySelectorAll('.imageShow');
+
+            inputFile.forEach((item, index) => {
+                item.addEventListener('change', e => {
+                    var fileReader = new FileReader();
+                    var infoFile = e.target.files[0];
+                    fileReader.readAsDataURL(infoFile);
+                    fileReader.onload = function (e) {
+                        var url = fileReader.result;
+                        imageShow[index].setAttribute('src', url);
+                    };
+                })
+            })
+    </script>*@
+@model WebBanQuanAo.Models.Product
+
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div><b style="font-size:20px;">Sửa sản phẩm</b></div>
+        </div>
+
+        @using (Html.BeginForm("EditProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <br />
+                        <div>Thông tin sản phẩm</div>
+                        <hr />
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.IDProduct)
+                        @Html.HiddenFor(model => model.QuantitySold)
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.Label("Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.NameProduct, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NameProduct, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.Label("Category", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownList("IDCategory", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.category.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.Label("Thương hiệu", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownList("IDThuongHieu", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.thuonghieu.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.Label("Chất liệu", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownList("IDChatLieu", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.chatlieu.Ten, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.Action("Size", "Products")
+                                <br />
+                                <div class="col-lg-6" style="margin-top:15px;">
+                                    <div class="form-group">
+                                        @Html.Label("Giá", htmlAttributes: new { @class = "control-label col-lg-12" })
+                                        <div class="col-lg-12">
+                                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" style="margin-top:15px;">
+                                    <div class="form-group">
+                                        @Html.Label("Ngày thêm", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.ImportDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                                            @Html.ValidationMessageFor(model => model.ImportDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Mô tả", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-left:12px;">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                    <br />
+                                    <div>
+                                        @Html.ActionLink("Back to List", "Index")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        <br />
+                        <div>Hình ảnh</div>
+                        <hr />
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <div class="col-md-12" style="margin:0; padding:0; text-align:center;">
+                                            <input name="Image1" class="inputFile" type="file" style="display:none" id="Image1" />
+                                            <label for="Image1">
+                                                @if (Model.Image1 != null)
+                                                {
+
+                                                    <img class="imageShow" id="showimage1" src="~/Content/images/@Model.Image1" style="width:60%;" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="imageShow" id="showimage1" src="~/images/Placeholder.jpg" style="width:60%;" />
+                                                }
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-3" style="text-align:center;">
+                                    <input name="Image2" class="inputFile" type="file" style="display:none" id="Image2" />
+                                    <label for="Image2">
+                                        @{
+                                            if (Model.Image2 != null)
+                                            {
+                                                <img class="imageShow" id="showimage2" src="~/Content/images/@Model.Image2" style="width:80%; height:80%;" />
+                                            }
+                                            else
+                                            {
+                                                <img class="imageShow" id="showimage2" src="~/images/Placeholder.jpg" style="width:80%; height:80%;" />
+                                            }
+                                        }
+
+                                    </label>
+                                </div>
+                                <div class="col-lg-3" style="text-align:center;">
+                                    <input name="Image3" class="inputFile" type="file" style="display:none" id="Image3" />
+                                    <label for="Image3">
+                                        @{
+                                            if (Model.Image3 != null)
+                                            {
+                                                <img class="imageShow" id="showimage3" src="~/Content/images/@Model.Image3" style="width:80%; height:80%;" />
+                                            }
+                                            else
+                                            {
+                                                <img class="imageShow" id="showimage3" src="~/images/Placeholder.jpg" style="width:80%; height:80%;" />
+                                            }
+                                        }
+                                    </label>
+                                </div>
+                                <div class="col-lg-3" style="text-align:center;">
+                                    <input name="Image4" class="inputFile" type="file" style="display:none" id="Image4" />
+                                    <label for="Image4">
+                                        @{
+                                            if (Model.Image4 != null)
+                                            {
+                                                <img class="imageShow" id="showimage4" src="~/Content/images/@Model.Image4" style="width:80%; height:80%;" />
+                                            }
+                                            else
+                                            {
+                                                <img class="imageShow" id="showimage4" src="~/images/Placeholder.jpg" style="width:80%; height:80%;" />
+                                            }
+                                        }
+
+                                    </label>
+                                </div>
+                                <div class="col-lg-3" style="text-align:center;">
+                                    <input name="Image5" class="inputFile" type="file" style="display:none" id="Image5" />
+                                    <label for="Image5">
+                                        @{
+                                            if (Model.Image5 != null)
+                                            {
+                                                <img class="imageShow" id="showimage5" src="~/Content/images/@Model.Image5" style="width:80%; height:80%;" />
+                                            }
+                                            else
+                                            {
+                                                <img class="imageShow" id="showimage5" src="~/images/Placeholder.jpg" style="width:80%; height:80%;" />
+                                            }
+                                        }
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+<script>
+    var inputFile = document.querySelectorAll('.inputFile');
+    var imageShow = document.querySelectorAll('.imageShow');
+
+    inputFile.forEach((item, index) => {
+        item.addEventListener('change', e => {
+            var fileReader = new FileReader();
+            var infoFile = e.target.files[0];
+            fileReader.readAsDataURL(infoFile);
+            fileReader.onload = function (e) {
+                var url = fileReader.result;
+                imageShow[index].setAttribute('src', url);
+            };
+        })
+    })
+</script>
+

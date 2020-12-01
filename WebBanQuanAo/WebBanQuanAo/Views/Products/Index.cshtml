@@ -1,0 +1,130 @@
+﻿@*@model IEnumerable<WebBanQuanAo.Models.Product>*@
+@model PagedList.IPagedList<WebBanQuanAo.Models.Product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            <a style="margin-left:-25px;" href="@Url.Action("AddProduct", "Products")">
+                <input type="button" class="btn btn-primary" value="Thêm" />
+            </a>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3" style="text-align:right">
+            @using (Html.BeginForm("Index", "Products", FormMethod.Post, new { @class = "navbar-form" }))
+            {
+                <div style="width:70%; display:inline-flex; margin-right:-25px;">
+                    <input type="text" name="strSearch" placeholder="Tìm kiếm" class="form-control" value="@ViewBag.strSearch" />
+                    <button class="btn btn-default" type="submit" style="width:55px; height:38px; margin-left:5px; background-color:#ffffff; border: 1px solid #ccc">
+                        <img src="~/Content/Images/search.png" style="width:100%; height:100%" />
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+    <div class="card-header">
+        <div><b style="font-size:20px;">Danh sách sản phẩm</b></div>
+    </div>
+    <table class="table" style="table-layout:fixed; width:100%">
+        <tr>
+            <th>
+                @Html.DisplayName("Tên sản phẩm")
+            </th>
+            <th>
+                @Html.DisplayName("Hình ảnh")
+            </th>
+            <th>
+                @Html.DisplayName("Giá")
+            </th>
+            <th>
+                @Html.DisplayName("Số lượng")
+            </th>
+            <th>
+                @Html.DisplayName("Mô tả")
+            </th>
+            <th>
+                @Html.DisplayName("Ngày nhập")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameProduct)
+                </td>
+                <td>
+                    @{ if (item.Image1 != null)
+                        {
+                            <img src="~/Content/Images/@item.Image1" style="width:90px; height:90px;" />
+                        }
+                        else if (item.Image2 != null)
+                        {
+                            <img src="~/Content/Images/@item.Image2" style="width:90px; height:90px;" />
+                        }
+                        else if (item.Image3 != null)
+                        {
+                            <img src="~/Content/Images/@item.Image3" style="width:90px; height:90px;" />
+                        }
+                        else if (item.Image4 != null)
+                        {
+                            <img src="~/Content/Images/@item.Image4" style="width:90px; height:90px;" />
+                        }
+                        else if (item.Image5 != null)
+                        {
+                            <img src="~/Content/Images/@item.Image5" style="width:90px; height:90px;" />
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityRemaining)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImportDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditProduct", new { id = item.IDProduct }) |
+                    @*@Html.ActionLink("Details", "Details", new { id=item.IDProduct }) |*@
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.IDProduct })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6" style="margin-left:0;">
+        @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+        {
+            <p>
+                Kích thước trang: @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
+            </p>
+        }
+    </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+        Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </div>
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, size = ViewBag.currentSize }))
+
+

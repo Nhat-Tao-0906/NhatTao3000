@@ -1,0 +1,88 @@
+﻿@*@model IEnumerable<WebBanQuanAo.Class.GioHang>*@
+@model WebBanQuanAo.Class.GioHang
+@using WebBanQuanAo.Class;
+
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+@{ 
+    double Subtotal = 0;
+    double Tax = 25;
+    double Total = 0;
+}
+
+<div class="small-container cart-page">
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        @if (Session["giohang"] != null)
+        {
+            List<GioHang> listgh = (List<GioHang>)Session["giohang"];
+            foreach (var item in listgh)
+            {
+                using (Html.BeginForm("CapNhatSanPham", "Shopping"))
+                {
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="~/Content/Images/@item.HinhAnh">
+                                <div>
+                                    <input type="hidden" name="ID" value="@item.ID" />
+                                    <input type="hidden" name="size" value="@item.Size" />
+                                    <p>@item.Ten</p>
+                                    <small>Price: $@(string.Format("{0:#, ##0}", item.Gia))</small>
+                                    <small>Size: @item.Size</small>
+                                    <br>
+                                    @Html.ActionLink("Remove", "XoaSanPham", "Shopping", new { id = item.ID }, new { color = "#ff523b" })
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input name="SoLuong" type="number" value="@item.SoLuong">
+                            <input type="submit" class="btn btn-primary" value="Update" style="width:auto; height: auto" />
+                            
+                        </td>
+                        <td>$@(string.Format("{0:#, ##0}", (item.Gia*item.SoLuong)))</td>
+                    </tr>
+                }
+
+                Subtotal += (item.Gia * item.SoLuong);
+            }
+        }
+    </table>
+    @{ 
+        Total = Subtotal + Tax;
+    }
+
+    <div class="total-price">
+        <table>
+            <tr>
+                <td>Subtotal</td>
+                <td>@(string.Format("{0:#, ##0}", Subtotal))$</td>
+            </tr>
+            <tr>
+                <td>Tax</td>
+                <td>@(string.Format("{0:#, ##0}", Tax))$</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>@(string.Format("{0:#, ##0}", Total))$</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div>
+        <a href="@Url.Action("ThanhToan","Shopping")">
+            <input type="button" class="btn btn-primary" value="Thanh toán" />
+        </a>
+    </div>
+
+
+</div>

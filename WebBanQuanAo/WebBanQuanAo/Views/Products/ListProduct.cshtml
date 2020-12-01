@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebBanQuanAo.Models.Product>
+@{
+    ViewBag.Title = "Ao";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+<body>
+    <div class="small-container">
+
+        <div class="row row-2">
+            <h2>All Products</h2>
+            <select>
+                <option>Default Shop</option>
+                <option>Short by price</option>
+                <option>Short by popularity</option>
+                <option>Short by Rating</option>
+                <option>Short by Sale</option>
+            </select>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-4">
+                    <a href="/Products/ChiTietSanPam/@item.IDProduct"><img src="~/Content/Images/@item.Image1"></a>
+                    <h4>@item.NameProduct</h4>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <p>$@item.Price</p>
+                </div>
+            }
+        </div>
+        <div class="page-btn">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>&#8594;</span>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+@*<script src="~/Scripts/exporting.js"></script>
+    <script src="~/Scripts/highcharts.js"></script>*@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<br />
+<br />
+<br />
+@*<h2>Dashboard</h2>*@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="container"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+        $(document).ready(function () {
+            $.getJSON("/Dashboard/Getdata", function (data) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: 'Doanh bán hàng theo tháng'
+                    },
+                    xAxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Doanh thu'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value + '$';
+                            }
+                        }
+                    },
+                    tooltip: {
+                        crosshairs: true,
+                        shared: true
+                    },
+                    plotOptions: {
+                        spline: {
+                            marker: {
+                                radius: 4,
+                                lineColor: '#666666',
+                                lineWidth: 1
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Doanh Thu',
+                        marker: {
+                            symbol: 'square'
+                        },
+                        data: [data.Thang1, data.Thang2, data.Thang3, data.Thang4, data.Thang5, data.Thang6, data.Thang7, data.Thang8, data.Thang9, data.Thang10, data.Thang11, data.Thang12]
+
+                    }]
+                });
+            });
+        });
+
+    </script>

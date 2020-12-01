@@ -1,0 +1,18 @@
+﻿@using WebBanQuanAo.Models;
+@{ 
+    Customer cus = Session["ThongTinKhachHang"] as Customer;
+}
+<body>
+    <div>
+        <b style="font-weight:600">Tên khách hàng:</b>&emsp; <i>@cus.Name</i>
+    </div>
+    <div>
+        <b style="font-weight:600">Email:</b>&emsp; <i>@cus.Email</i>
+    </div>
+    <div>
+        <b style="font-weight:600">Số điện thoại:</b>&emsp; <i>@cus.Phone</i>
+    </div>
+    <div>
+        <b style="font-weight:600">Địa chỉ giao hàng:</b>&emsp; <i>@cus.Address</i>
+    </div>
+</body>

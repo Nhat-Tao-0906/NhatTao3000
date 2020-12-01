@@ -1,0 +1,10 @@
+﻿@model WebBanQuanAo.Models.Account
+
+@using (Html.BeginForm("Login","Account", FormMethod.Post, new { id = "LoginForm" }))
+{
+    <input name="UserName" type="text" placeholder="Username">
+    <input name="PassWord" type="password" placeholder="Password">
+    <button type="submit" class="btn">Login</button>
+    
+    <a href="">Forgot password</a>
+}

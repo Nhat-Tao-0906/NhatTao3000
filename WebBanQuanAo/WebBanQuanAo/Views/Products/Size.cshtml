@@ -1,0 +1,20 @@
+﻿<head>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            var i = 2;
+            $("#Add").click(function () {
+                $("#control").append('<div class="row"><div class="col-lg-6"><label for="size'+i+'"'+'>Size</label><select style="width:100%" class="form-control" name="size'+i+'"'+ 'id="size'+i+'"'+'><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option></select></div><div class="col-lg-6"><label for="">Số Lượng</label><input type="number" name="SL'+i+'"'+ 'class="form-control" id="SL'+i+'"'+' /></div>');
+                i++;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container-fluid" id="control">
+        <div>
+            <button id="Add" type="button" style="padding:5px 10px; margin-bottom:10px; border-radius:5px;" class="btn btn-primary">+</button>
+        </div>
+        <div class="row"><div class="col-lg-6"><label for="size1">Size</label><select style="width:100%" class="form-control" name="size1" id="size1"><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option></select></div><div class="col-lg-6"><label for="">Số lượng</label><input type="number" name="SL1" class="form-control" id="SL1" /></div></div>
+    </div>
+</body>

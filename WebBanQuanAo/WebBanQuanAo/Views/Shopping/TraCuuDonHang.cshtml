@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "TraCuuDonHang";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+<br />
+<div style="text-align:center;">
+    <h2>Tra cứu đơn hàng</h2>
+</div>
+<style>
+    form .col-lg-4 {
+        width:34%;
+    }
+    input {
+        border-radius: 4px;
+        height: 40px!important;
+    }
+</style>
+@using(Html.BeginForm("TraCuuDonHang", "Shopping"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group" style="margin-top: 30px;">
+                    <input name="MaDonHang" type="text" placeholder="Mã đơn hàng" />
+                    <input name="Email" type="text" placeholder="Email / Số điện thoại" />
+                    <button type="submit" class="btn btn-primary">Tra cứu đơn hàng</button>
+                </div>
+            </div>
+            <div class="col-lg-4">
+            </div>
+        </div>
+    </div>
+}
+<footer style="margin-top:75px;"></footer>
+

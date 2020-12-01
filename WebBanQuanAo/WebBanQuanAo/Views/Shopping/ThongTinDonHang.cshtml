@@ -1,0 +1,32 @@
+﻿@using WebBanQuanAo.Models;
+@{
+    ViewBag.Title = "ThongTinDonHang";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+<body>
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div><h2>Thông tin khách hàng</h2></div>
+                <br />
+                @Html.Action("ThongTinKhachHang")
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <h2>Thông tin đơn hàng</h2>
+                </div>
+                <br />
+                @Html.Action("ChiTietDonHang")
+            </div>
+        </div>
+    </div>
+</body>
+<footer style="margin-top:150px;"></footer>
+
+
+

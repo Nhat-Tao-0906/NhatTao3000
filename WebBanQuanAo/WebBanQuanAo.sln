@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBanQuanAo", "WebBanQuanAo\WebBanQuanAo.csproj", "{1A265048-34AE-446A-B8F8-F0A36281C85E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{84550061-49C6-4280-8232-AD2E42701E16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A265048-34AE-446A-B8F8-F0A36281C85E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A265048-34AE-446A-B8F8-F0A36281C85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A265048-34AE-446A-B8F8-F0A36281C85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A265048-34AE-446A-B8F8-F0A36281C85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84550061-49C6-4280-8232-AD2E42701E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84550061-49C6-4280-8232-AD2E42701E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84550061-49C6-4280-8232-AD2E42701E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84550061-49C6-4280-8232-AD2E42701E16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1186848C-0E42-4111-B6F2-0C2CBB085D4D}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebBanQuanAo.Models.Product>
+
+@foreach (var item in Model)
+{
+    <div class="col-4">
+        @{ 
+            if(item.Image1 != null)
+            {
+                <a href="@Url.Action("ChiTietSanPam","Products", new { @id = item.IDProduct })"><img src="~/Content/Images/@item.Image1" style="width: 237px; height:237px;"></a>
+            }
+            else if(item.Image2 != null)
+            {
+                <a href="@Url.Action("ChiTietSanPam","Products", new { @id = item.IDProduct })"><img src="~/Content/Images/@item.Image2" style="width: 237px; height:237px;"></a>
+            }
+            else if(item.Image3 != null)
+            {
+                <a href="@Url.Action("ChiTietSanPam","Products", new { @id = item.IDProduct })"><img src="~/Content/Images/@item.Image3" style="width: 237px; height:237px;"></a>
+            }
+            else if(item.Image4 != null)
+            {
+                <a href="@Url.Action("ChiTietSanPam","Products", new { @id = item.IDProduct })"><img src="~/Content/Images/@item.Image4" style="width: 237px; height:237px;"></a>
+            }
+            else if(item.Image5 != null)
+            {
+                <a href="@Url.Action("ChiTietSanPam","Products", new { @id = item.IDProduct })"><img src="~/Content/Images/@item.Image5" style="width: 237px; height:237px;"></a>
+            }
+        }
+        
+        <a href="products_detal.html"><h4>@item.NameProduct</h4></a>
+        <div class="rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o"></i>
+        </div>
+        <p>$@item.Price</p>
+    </div>
+}

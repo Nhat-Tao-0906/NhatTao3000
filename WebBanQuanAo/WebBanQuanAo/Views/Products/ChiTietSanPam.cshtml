@@ -1,0 +1,312 @@
+﻿@model WebBanQuanAo.Models.Product
+@{
+    ViewBag.Title = "ChiTietSanPam";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+<div class="small-container single-product">
+    <div class="row">
+        <div class="col-2">
+            @{
+                if (Model.Image1 != null)
+                {
+                    <img src="~/Content/Images/@Model.Image1" style="width:475px; height:448px;" id="productImg">
+                }
+                else if (Model.Image2 != null)
+                {
+                    <img src="~/Content/Images/@Model.Image2" style="width:475px; height:448px;" id="productImg">
+                }
+                else if (Model.Image3 != null)
+                {
+                    <img src="~/Content/Images/@Model.Image3" style="width:475px; height:448px;" id="productImg">
+                }
+                else if (Model.Image4 != null)
+                {
+                    <img src="~/Content/Images/@Model.Image4" style="width:475px; height:448px;" id="productImg">
+                }
+                else if (Model.Image5 != null)
+                {
+                    <img src="~/Content/Images/@Model.Image5" style="width:475px; height:448px;" id="productImg">
+                }
+            }
+
+
+            <div class="small-img-row">
+                @{
+                    if (Model.Image2 != null)
+                    {
+                        <div class="small-img-rol">
+                            <img src="~/Content/Images/@Model.Image2" style="width:114px; height:107px;" class="small-img">
+                        </div>
+                    }
+                    if (Model.Image3 != null)
+                    {
+                        <div class="small-img-rol">
+                            <img src="~/Content/Images/@Model.Image3" style="width:114px; height:107px;" class="small-img">
+                        </div>
+                    }
+                    if (Model.Image4 != null)
+                    {
+                        <div class="small-img-rol">
+                            <img src="~/Content/Images/@Model.Image4"style="width:114px; height:107px;" class="small-img">
+                        </div>
+                    }
+                    if (Model.Image5 != null)
+                    {
+                        <div class="small-img-rol">
+                            <img src="~/Content/Images/@Model.Image5" style="width:114px; height:107px;" class="small-img">
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+        <div class="col-2">
+            <p>Home / T-Shirt</p>
+            <h1>@Model.NameProduct</h1>
+            <h4>$@Model.Price</h4>
+            @using (Html.BeginForm("ThemGioHang", "Shopping"))
+            {
+                <select name="size">
+                    <option>Select Size</option>
+                    @{
+                        foreach (var item in ViewBag.listsize)
+                        {
+                            <option value="@item.size">@item.size</option>
+                        }
+                    }
+                    @*<option>XXL</option>
+                <option>XL</option>
+                <option>Large</option>
+                <option>Medium</option>
+                <option>Small</option>*@
+                </select>
+                @*<input type="number" value="1">*@
+                
+                <a href="@Url.Action("ThemGioHang","Shopping")">
+                    <input type="submit" value="Add To Card" class="btn btn-primary" />
+                </a>
+            }
+            <h3>
+                Product Detail
+                <i class="fa fa-indent"></i>
+            </h3>
+            <br>
+            <p>
+                @Model.Description
+                Surrounded affronting favourable no mr. Lain knew like half she yet joy. Be than dull as seen very shot. Attachment ye so am travelling estimating projecting is. Off fat address attacks his besides. Suitable settling mr attended no doubtful feelings. Any over for say bore such sold five but hung
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ----- title------------- -->
+<div class="small-container">
+    <div class="row row2" style="justify-content: space-around;">
+        <h2>Relate Products</h2>
+        <p>View More</p>
+    </div>
+</div>
+
+<!-- ---------------Products----------------- -->
+<div class="small-container">
+
+    <div class="row">
+        <div class="col-4">
+            <img src="~/images/product-1.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-2.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-3.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-4.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <img src="~/images/product-5.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-6.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-7.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-8.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <img src="~/images/product-9.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-10.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-11.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/product-12.jpg">
+            <h4>Red Printed T-Shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>$50.00</p>
+        </div>
+    </div>
+    <div class="page-btn">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>&#8594;</span>
+    </div>
+</div>
+<!-- ------------------- js for toggle menu-------------- -->
+<script>
+            var MenuItems = document.getElementById("MenuItems");
+
+            MenuItems.style.maxHeight = "0px";
+
+            function menutoggle() {
+                if (MenuItems.style.maxHeight == "0px") {
+                    MenuItems.style.maxHeight = "200px";
+                }
+                else {
+                    MenuItems.style.maxHeight = "0px";
+                }
+            }
+
+</script>
+
+<!-- ------------------- JS for  product gallery------------------------         -->
+<script>
+            var ProductImg = document.getElementById("productImg");
+            var SmallImg = document.getElementsByClassName("small-img");
+
+            SmallImg[0].onclick = function()
+            {
+                ProductImg.src = SmallImg[0].src;
+            }
+            SmallImg[1].onclick = function()
+            {
+                ProductImg.src = SmallImg[1].src;
+            }
+            SmallImg[2].onclick = function()
+            {
+                ProductImg.src = SmallImg[2].src;
+            }
+            SmallImg[3].onclick = function()
+            {
+                ProductImg.src = SmallImg[3].src;
+            }
+
+</script>

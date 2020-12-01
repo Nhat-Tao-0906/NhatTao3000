@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutSuccess";
+    Layout = "~/Views/Shared/_Layout_Client.cshtml";
+}
+
+<body style="text-align:center;">
+    <h2>Shopping Successfully!</h2>
+    <h4>Your order code is: @Session["madonhang"].ToString()</h4>
+    <h4>Your order had sent to shop successfully. You will receive goods in 2-3 days. See you again. Thanks!</h4>
+    <a class="btn btn-default" href="@Url.Action("Home","Home")">Continuos Shopping...</a>
+</body>
+<footer style="height:300px;">
+
+</footer>
