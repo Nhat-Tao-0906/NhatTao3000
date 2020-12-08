@@ -153,6 +153,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\ThuongHieuController.cs" />
     <Compile Include="DAL\WebBanHangContext.cs" />
@@ -199,6 +200,14 @@
     <Compile Include="Migrations\202012011325521_v9.designer.cs">
       <DependentUpon>202012011325521_v9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012021121476_v10.cs" />
+    <Compile Include="Migrations\202012021121476_v10.designer.cs">
+      <DependentUpon>202012021121476_v10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012071613467_v11.cs" />
+    <Compile Include="Migrations\202012071613467_v11.designer.cs">
+      <DependentUpon>202012071613467_v11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Bill_Cus.cs" />
@@ -208,6 +217,7 @@
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\BillDetails.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Reviews.cs" />
     <Compile Include="Models\Size_Product.cs" />
     <Compile Include="Models\ThuongHieu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1897,6 +1907,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\anh-dai-dien-FB-200.jpg" />
     <Content Include="Content\Images\pro1.jpg" />
     <Content Include="Content\Images\pro2.jpg" />
     <Content Include="Content\Images\pro3.jpg" />
@@ -1906,6 +1917,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\account.png" />
+    <Content Include="images\anh-dai-dien-FB-200.jpg" />
+    <Content Include="images\check.png" />
+    <Content Include="images\Iconaccount.png" />
+    <Content Include="images\logout.png" />
     <Content Include="images\Placeholder.jpg" />
     <Content Include="images\UpLoadImage.png" />
     <Content Include="images\app-store.png" />
@@ -1947,6 +1963,7 @@
     <Content Include="images\user-1.png" />
     <Content Include="images\user-2.png" />
     <Content Include="images\user-3.png" />
+    <Content Include="images\Ảnh-đại-diện-FB-mặc-định-nữ.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\Admin\scss\navs\_global.scss" />
@@ -2152,7 +2169,6 @@
     <Content Include="Views\Categorys\AddCategory_Modal.cshtml" />
     <Content Include="Views\Categorys\EditCategory.cshtml" />
     <Content Include="Views\Categorys\Index.cshtml" />
-    <Content Include="Views\Products\AddImage.cshtml" />
     <Content Include="Views\Products\AddProduct.cshtml" />
     <Content Include="Views\Products\EditProduct.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
@@ -2189,9 +2205,12 @@
     <Content Include="Views\Bill\ThongTinKhachHang.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Customers\DanhSachKhachHang.cshtml" />
+    <Content Include="Views\Products\Reviews.cshtml" />
+    <Content Include="Views\Customers\ThongTinKhachHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Reviews\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2236,6 +2255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012011325521_v9.resx">
       <DependentUpon>202012011325521_v9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012021121476_v10.resx">
+      <DependentUpon>202012021121476_v10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012071613467_v11.resx">
+      <DependentUpon>202012071613467_v11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

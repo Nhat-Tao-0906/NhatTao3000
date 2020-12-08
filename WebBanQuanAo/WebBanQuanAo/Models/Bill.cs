@@ -19,9 +19,9 @@ namespace WebBanQuanAo.Models
         [Required]
         public double BillTotal { get; set; }
         [Required]
-        public string OrderStatus { get; set; }
+        public int OrderStatus { get; set; }
         [Required]
-        public string PayMentStatus { get; set; }
+        public int PayMentStatus { get; set; }
         [Required]
         public DateTime? DateCreated { get; set; }
         public Customer customer { get; set; }

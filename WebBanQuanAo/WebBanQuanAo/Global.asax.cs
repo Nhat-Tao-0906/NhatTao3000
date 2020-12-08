@@ -23,6 +23,7 @@ namespace WebBanQuanAo
             WebBanHangContext db = new WebBanHangContext();
             Session["giohang"] = null;
             Session["idcus"] = null;
+            Session["idcusReview"] = null;
             Session["menu"] = db.categories.ToList();
         }
     }

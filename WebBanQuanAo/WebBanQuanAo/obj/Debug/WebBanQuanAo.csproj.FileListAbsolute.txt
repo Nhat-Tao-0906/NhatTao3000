@@ -99,3 +99,5 @@ D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\bin\PagedList.Mvc.xml
 D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\obj\Debug\WebBanQuanAo.Migrations.v7.resources
 D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\obj\Debug\WebBanQuanAo.Migrations.v8.resources
 D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\obj\Debug\WebBanQuanAo.Migrations.v9.resources
+D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\obj\Debug\WebBanQuanAo.Migrations.v10.resources
+D:\Huflit\TMDT\Do An\WebBanQuanAo\WebBanQuanAo\obj\Debug\WebBanQuanAo.Migrations.v11.resources

@@ -43,11 +43,40 @@
         </tr>
         <tr>
             <td>Thanh toán</td>
-            <td>@Session["TrangThaiThanhToan"]</td>
+            @if (@Session["TrangThaiThanhToan"].ToString() == "0")
+            {
+                <td>Chưa thanh toán</td>
+            }
+            else
+            {
+                <td>Đã thanh toán</td>
+            }
         </tr>
         <tr>
             <td>Trạng thái đơn hàng</td>
-            <td>@Session["TrangThaiDonHang"]</td>
+            @if (Session["TrangThaiDonHang"].ToString() == "0")
+            {
+                <td>Đã hủy</td>
+            }
+            else if (Session["TrangThaiDonHang"].ToString() == "1")
+            {
+                <td>Đang chờ xử lý</td>
+            }
+
+            else if (Session["TrangThaiDonHang"].ToString() == "2")
+            {
+                <td>Đã xác nhận</td>
+            }
+
+            else if (Session["TrangThaiDonHang"].ToString() == "3")
+            {
+                <td>Đang giao hàng</td>
+            }
+
+            else if (Session["TrangThaiDonHang"].ToString() == "4")
+            {
+                <td>Đã giao hàng</td>
+            }
         </tr>
         <tr>
             <td></td>

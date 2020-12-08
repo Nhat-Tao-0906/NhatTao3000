@@ -49,5 +49,6 @@ namespace WebBanQuanAo.Models
         //public Size_Product size_Product { get; set; }
         public ICollection<BillDetails> billDetails { get; set; }
         public ICollection<Size_Product> size_Products { get; set; }
+        public ICollection<Reviews> reviews { get; set; }
     }
 }

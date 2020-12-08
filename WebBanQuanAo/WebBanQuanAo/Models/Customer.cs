@@ -16,9 +16,11 @@ namespace WebBanQuanAo.Models
         public string Email { get; set; }
         [Required]
         public string Phone { get; set; }
+        public string Image { get; set; }
         [Required]
         public string Address { get; set; }
         public bool Status { get; set; }
         public ICollection<Bill> bill { get; set; }
+        public ICollection<Reviews> reviews { get; set; }
     }
 }

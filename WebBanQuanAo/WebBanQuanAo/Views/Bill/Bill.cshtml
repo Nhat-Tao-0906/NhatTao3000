@@ -70,35 +70,42 @@
                     @Html.DisplayFor(modelItem => item.IDCus)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShippingCost)
+                    @(string.Format("{0:#, ##0}", item.ShippingCost))$
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BillTotal)
+                    @(string.Format("{0:#, ##0}", item.BillTotal))$
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateCreated)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PayMentStatus)
+                    @if (item.PayMentStatus == 0)
+                    {
+                        @Html.DisplayName("Chưa thanh toán")
+                    }
+                    else
+                    {
+                        @Html.DisplayName("Đã thanh toán")
+                    }
                 </td>
                 <td>
-                    @if (item.OrderStatus == "1")
+                    @if (item.OrderStatus == 1)
                     {
                         @Html.DisplayName("Đang chờ xử lý")
                     }
-                    else if (item.OrderStatus == "2")
+                    else if (item.OrderStatus == 2)
                     {
                         @Html.DisplayName("Đã xác nhận")
                     }
-                    else if (item.OrderStatus == "3")
+                    else if (item.OrderStatus == 3)
                     {
                         @Html.DisplayName("Đang giao hàng")
                     }
-                    else if (item.OrderStatus == "4")
+                    else if (item.OrderStatus == 4)
                     {
                         @Html.DisplayName("Đã giao hàng")
                     }
-                    else if (item.OrderStatus == "0")
+                    else if (item.OrderStatus == 0)
                     {
                         @Html.DisplayName("Đã hủy")
                     }

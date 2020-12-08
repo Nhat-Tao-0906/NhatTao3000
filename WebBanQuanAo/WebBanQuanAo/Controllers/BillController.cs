@@ -83,7 +83,11 @@ namespace WebBanQuanAo.Controllers
         {
             int id = (Session["DH"] as Bill).IDBill;
             var bill = db.Bill.Where(m => m.IDBill == id).FirstOrDefault();
-            bill.OrderStatus = form["name"];
+            bill.OrderStatus = int.Parse(form["name"].ToString());
+            if (int.Parse(form["name"].ToString()) == 4)
+            {
+                bill.PayMentStatus = 1;
+            }
             db.Entry(bill).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             //return RedirectToAction("ChiTietDonHang", "Bill", id);
@@ -93,7 +97,7 @@ namespace WebBanQuanAo.Controllers
         {
             int id = (Session["DH"] as Bill).IDBill;
             var bill = db.Bill.Where(m => m.IDBill == id).FirstOrDefault();
-            bill.OrderStatus = "0";
+            bill.OrderStatus = 0;
             db.Entry(bill).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Bill");

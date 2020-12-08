@@ -139,7 +139,14 @@
                     </tr>
                     <tr>
                         <td>Thanh toán</td>
-                        <td>@Session["ThanhToan"]</td>
+                        @if (Session["ThanhToan"].ToString() == "0")
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Đã thanh toán</td>
+                        }
                     </tr>
                     <tr>
                         <td></td>

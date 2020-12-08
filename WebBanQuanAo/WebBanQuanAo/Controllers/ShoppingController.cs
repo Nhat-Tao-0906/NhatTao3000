@@ -8,6 +8,7 @@ using WebBanQuanAo.Models;
 using WebBanQuanAo.DAL;
 using System.Configuration;
 using PayPal.Api;
+using System.IO;
 
 namespace WebBanQuanAo.Controllers
 {
@@ -97,6 +98,12 @@ namespace WebBanQuanAo.Controllers
         [HttpGet]
         public ActionResult ThanhToan()
         {
+            if (Session["idcusReview"] != null)
+            {
+                int id = int.Parse(Session["idcusReview"].ToString());
+                var cus = db.customer.Where(m => m.IDCus == id).FirstOrDefault();
+                return View(cus);
+            }
             return View();
         }
         [HttpPost]
@@ -104,13 +111,23 @@ namespace WebBanQuanAo.Controllers
         {
             if (form["HinhThuc"] == "1")
             {
-                Register reg = new Register();
-                reg.Name = form["Name"];
-                reg.Email = form["Email"];
-                reg.Phone = form["Phone"];
-                reg.Address = form["Address"];
-                Session["infocus"] = reg;
-                return RedirectToAction("PayMent");
+                string email = form["email"];
+                var cus = db.customer.Where(m => m.Email == email).FirstOrDefault();
+                if (cus != null && cus.Status == true || cus == null)
+                {
+                    Register reg = new Register();
+                    reg.Name = form["Name"];
+                    reg.Email = form["Email"];
+                    reg.Phone = form["Phone"];
+                    reg.Address = form["Address"];
+                    Session["infocus"] = reg;
+                    return RedirectToAction("PayMent");
+                }
+                else
+                {
+                    ViewBag.errorbanner = "Bạn đã bị cấm mua hàng tại web";
+                    return View();
+                }
             }
             try
             {
@@ -127,9 +144,11 @@ namespace WebBanQuanAo.Controllers
                 if (i != 1)
                 {
                     c.Name = form["Name"];
+                    c.Image = "anh-dai-dien-FB-200.jpg";
                     c.Email = form["Email"];
                     c.Phone = form["Phone"];
                     c.Address = form["Address"];
+                    c.Status = true;
                     db.customer.Add(c);
                     db.SaveChanges();
                 }
@@ -137,14 +156,18 @@ namespace WebBanQuanAo.Controllers
                 {
                     string Email = form["Email"];
                     c = db.customer.Where(m => m.Email == Email).FirstOrDefault();
+                    if (c.Status == false)
+                    {
+                        return View();
+                    }
                 }        
                 Bill b = new Bill();
                 b.IDCus = c.IDCus;
                 b.DateCreated = DateTime.Now;
                 b.ShippingCost = 25;
                 b.BillTotal = 0;
-                b.PayMentStatus = "Chưa thanh toán";
-                b.OrderStatus = "1";
+                b.PayMentStatus = 0;
+                b.OrderStatus = 1;
                 db.Bill.Add(b);
                 List<GioHang> lgh = (List<GioHang>)Session["giohang"];
                 double total = 0;
@@ -338,9 +361,11 @@ namespace WebBanQuanAo.Controllers
                         if (i != 1)
                         {
                             c.Name = form.Name;
+                            c.Image = "anh-dai-dien-FB-200.jpg";
                             c.Email = form.Email;
                             c.Phone = form.Phone;
                             c.Address = form.Address;
+                            c.Status = true;
                             db.customer.Add(c);
                             db.SaveChanges();
                         }
@@ -348,14 +373,18 @@ namespace WebBanQuanAo.Controllers
                         {
                             string Email = form.Email;
                             c = db.customer.Where(m => m.Email == Email).FirstOrDefault();
+                            //if (c.Status == false)
+                            //{
+                            //    return View();
+                            //}
                         }
                         Bill b = new Bill();
                         b.IDCus = c.IDCus;
                         b.DateCreated = DateTime.Now;
                         b.ShippingCost = 25;
                         b.BillTotal = 0;
-                        b.PayMentStatus = "Chưa thanh toán";
-                        b.OrderStatus = "1";
+                        b.PayMentStatus = 0;
+                        b.OrderStatus = 1;
                         db.Bill.Add(b);
                         List<GioHang> lgh = (List<GioHang>)Session["giohang"];
                         double total = 0;
@@ -389,26 +418,6 @@ namespace WebBanQuanAo.Controllers
                         db.Entry(b).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         Session["madonhang"] = b.IDBill;
-
-                        //List<GioHang> lgh = (List<GioHang>)Session["giohang"];
-                        //double total = 0;
-                        //foreach (var item in lgh)
-                        //{
-                        //    BillDetails bd = new BillDetails();
-                        //    bd.IDBill = b.IDBill;
-                        //    double tongtien = 0;
-                        //    bd.IDProduct = item.ID;
-                        //    bd.Quantity = item.SoLuong;
-                        //    bd.UnitPrice = item.Gia;
-                        //    tongtien += (item.Gia * item.SoLuong);
-                        //    db.billDetails.Add(bd);
-                        //    total += tongtien;
-                        //}
-                        //total += 25;
-                        //b.BillTotal = total;
-                        //db.Entry(b).State = System.Data.Entity.EntityState.Modified;
-                        //db.SaveChanges();
-
                         string content = System.IO.File.ReadAllText(Server.MapPath("~/Template/newoder.html"));
                         content = content.Replace("{{NameProduct}}", lgh[0].Ten);
                         content = content.Replace("{{Quantity}}", lgh[0].SoLuong.ToString());

@@ -1,11 +1,102 @@
 ﻿@model WebBanQuanAo.Models.Product
+@using WebBanQuanAo.DAL;
+@using WebBanQuanAo.Models;
 @{
     ViewBag.Title = "ChiTietSanPam";
     Layout = "~/Views/Shared/_Layout_Client.cshtml";
 }
 
+@{
+    WebBanHangContext db = new WebBanHangContext();
+    int idCate = Model.IDCategory;
+    int idPro = Model.IDProduct;
+    var rs = from l in db.products where l.IDCategory == idCate && l.IDProduct != idPro select l;
+    List<Product> ModelProduct = new List<Product>();
+    foreach(var item in rs)
+    {
+        ModelProduct.Add(item);
+    }
+    double a = ViewBag.ratio / 5 * 100;
+    var motsao = ViewBag.motsao / ViewBag.count * 100;
+    var haisao = ViewBag.haisao / ViewBag.count * 100;
+    var basao = ViewBag.basao / ViewBag.count * 100;
+    var bonsao = ViewBag.bonsao / ViewBag.count * 100;
+    var namsao = ViewBag.namsao / ViewBag.count * 100;
+}
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style>
+    i {
+        font-size: 20px !important;
+        transition: all 0.4s;
+    }
+
+    .star {
+        position: relative;
+        display: inline-block;
+    }
+
+        .star div:first-child {
+            display: inline-block;
+        }
+
+    ._star {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /*    width: 50%;*/
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .fa-star {
+        color: #ffd800;
+    }
+
+    .single-product .fa {
+        margin-left: 0;
+    }
+
+    input {
+        display: none;
+    }
+
+    .ratio {
+        display: inline-block;
+        width: 166px;
+        height: 6px;
+        background-color: rgb(238, 238, 238);
+        position: relative;
+        z-index: 1;
+        margin: 0px 6px;
+        border-radius: 99em;
+    }
+
+    .subratio {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        background-color: rgb(120, 120, 120);
+        border-radius: 99em;
+    }
+    /*
+    #i {
+        font-size: 50px !important;
+        transition: all 0.4s;
+    }*/
+    #div_input input {
+        display: none;
+    }
+
+        #div_input input:checked ~ #label i {
+            color: #ffd800 !important;
+            transition: all 0.4s;
+        }
+</style>
 <div class="small-container single-product">
-    <div class="row">
+    <div class="row" style="align-items:normal">
         <div class="col-2">
             @{
                 if (Model.Image1 != null)
@@ -48,7 +139,7 @@
                     if (Model.Image4 != null)
                     {
                         <div class="small-img-rol">
-                            <img src="~/Content/Images/@Model.Image4"style="width:114px; height:107px;" class="small-img">
+                            <img src="~/Content/Images/@Model.Image4" style="width:114px; height:107px;" class="small-img">
                         </div>
                     }
                     if (Model.Image5 != null)
@@ -63,36 +154,65 @@
 
         </div>
         <div class="col-2">
-            <p>Home / T-Shirt</p>
-            <h1>@Model.NameProduct</h1>
-            <h4>$@Model.Price</h4>
+            <p style="margin:0">Home / T-Shirt</p>
+            <h2 style="margin:5px 0">@Model.NameProduct</h2>
+
+            <h4 style="margin:0 0 5px 0!important">@(string.Format("{0:#, ##0}", Model.Price))$</h4>
+            @*@Html.Action("Reviews")*@
+            <div class="star">
+                <div>
+                    <input type="radio" name="" id="" />
+                    <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                </div>
+                <div class="_star" style="width: @a%">
+                    <input type="radio" name="" id="" />
+                    <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    <input type="radio" name="" id="" />
+                    <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                </div>
+            </div>
+            @{
+                if (ViewBag.ratio == 0)
+                {
+                    <p style="display:inline-block; margin-left:5px;">Chưa có nhận xét</p>
+                }
+                else
+                {
+                    <p style="display:inline-block; margin-left:5px;">@ViewBag.count nhận xét</p>
+                }
+            }
             @using (Html.BeginForm("ThemGioHang", "Shopping"))
             {
-                <select name="size">
-                    <option>Select Size</option>
+                <select name="size" style="margin:10px 0">
                     @{
                         foreach (var item in ViewBag.listsize)
                         {
                             <option value="@item.size">@item.size</option>
                         }
                     }
-                    @*<option>XXL</option>
-                <option>XL</option>
-                <option>Large</option>
-                <option>Medium</option>
-                <option>Small</option>*@
                 </select>
-                @*<input type="number" value="1">*@
-                
                 <a href="@Url.Action("ThemGioHang","Shopping")">
                     <input type="submit" value="Add To Card" class="btn btn-primary" />
                 </a>
             }
-            <h3>
+            <h3 style="margin-top: 20px;">
                 Product Detail
                 <i class="fa fa-indent"></i>
             </h3>
-            <br>
             <p>
                 @Model.Description
                 Surrounded affronting favourable no mr. Lain knew like half she yet joy. Be than dull as seen very shot. Attachment ye so am travelling estimating projecting is. Off fat address attacks his besides. Suitable settling mr attended no doubtful feelings. Any over for say bore such sold five but hung
@@ -100,6 +220,183 @@
         </div>
     </div>
 </div>
+
+<!--đánh giá-->
+
+<div class="small-container">
+    <div class="row row2" style="margin-left:10px; display:block">
+        <h2>Khách hàng nhận xét</h2>
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2" style="text-align:center; border-right: 1px solid #ccc">
+                    <h2>@ViewBag.ratio</h2>
+                    <div class="star">
+                        <div>
+                            <input type="radio" name="" id="" />
+                            <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        </div>
+                        <div class="_star" style="width: @a%">
+                            <input type="radio" name="" id="" />
+                            <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        </div>
+                    </div>
+                    @{
+                        if (ViewBag.ratio == 0)
+                        {
+                            <p>Chưa có nhận xét</p>
+                        }
+                        else
+                        {
+                            <p>@ViewBag.count nhận xét</p>
+                        }
+                    }
+
+                </div>
+                <div class="col-lg-6">
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <div class="ratio">
+                            <div class="subratio" style="width:@namsao%"></div>
+                        </div>
+                        <div style="display:inline-block; font-size:13px;">@ViewBag.namsao đánh giá</div>
+                    </div>
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <div class="ratio">
+                            <div class="subratio" style="width:@bonsao%"></div>
+                        </div>
+                        <div style="display:inline-block; font-size:13px;">@ViewBag.bonsao đánh giá</div>
+                    </div>
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <div class="ratio">
+                            <div class="subratio" style="width:@basao%"></div>
+                        </div>
+                        <div style="display:inline-block; font-size:13px;">@ViewBag.basao đánh giá</div>
+                    </div>
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <div class="ratio">
+                            <div class="subratio" style="width:@haisao%"></div>
+                        </div>
+                        <div style="display:inline-block; font-size:13px;">@ViewBag.haisao đánh giá</div>
+                    </div>
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <div class="ratio">
+                            <div class="subratio" style="width:@motsao%"></div>
+                        </div>
+                        <div style="display:inline-block; font-size:13px;">@ViewBag.motsao đánh giá</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <h2 style="display:block">Đánh giá</h2>
+                <br />
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src="~/images/anh-dai-dien-FB-200.jpg" style="width:60px;  height: 60px; border-radius:30px;" />
+                    <div style="display:inline-block">
+                        <h4 style="margin-left:10px;">Ten</h4>
+                        <div>
+                            <img src="~/images/check.png" style="width:20px;  height: 20px; border-radius:3px; margin-left:10px; margin-bottom:-5px;" />
+                            <div style="display:inline-block">Đã mua sản phẩm này</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    @using (Html.BeginForm("FormDanhGia", "Products", FormMethod.Post))
+                    {
+                        <div id="div_input" style="display:flex;flex-direction:row-reverse; display:inline-flex">
+                            <input type="radio" name="Ratio" id="Star5" value="5" />
+                            <label for="Star5" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                            <input type="radio" name="Ratio" id="Star4" value="4" />
+                            <label for="Star4" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                            <input type="radio" name="Ratio" id="Star3" value="3" />
+                            <label for="Star3" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                            <input type="radio" name="Ratio" id="Star2" value="2" />
+                            <label for="Star2" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                            <input type="radio" name="Ratio" id="Star1" value="1" checked="checked" />
+                            <label for="Star1" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                        </div>
+
+                        <div class="form-group">
+                            <input name="Content" style="display:unset; height: 60px; border-radius:3px;" type="text" placeholder="Nội dung" />
+                            <input type="submit" class="btn btn-primary" value="Gửi" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
 
 <!-- ----- title------------- -->
 <div class="small-container">
@@ -109,158 +406,101 @@
     </div>
 </div>
 
+
 <!-- ---------------Products----------------- -->
 <div class="small-container">
-
     <div class="row">
-        <div class="col-4">
-            <img src="~/images/product-1.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
+        @foreach (var item in ModelProduct)
+        {
+            double arelate = 0;
+            double motsaorelate = 0;
+            double haisaorelate = 0;
+            double basaorelate = 0;
+            double bonsaorelate = 0;
+            double namsaorelate = 0;
+            double ratio = 0;
+            var rsrelate = from l in db.reviews where item.IDProduct == l.IDProduct select l;
+            if (rsrelate.Count() > 0)
+            {
+                foreach (var itemm in rsrelate)
+                {
+                    if (itemm.Ratio == 1)
+                    {
+                        motsaorelate += itemm.Ratio;
+                    }
+                    else if (itemm.Ratio == 2)
+                    {
+                        haisaorelate += itemm.Ratio;
+                    }
+                    else if (itemm.Ratio == 3)
+                    {
+                        basaorelate += itemm.Ratio;
+                    }
+                    else if (itemm.Ratio == 4)
+                    {
+                        bonsaorelate += itemm.Ratio;
+                    }
+                    else if (itemm.Ratio == 5)
+                    {
+                        namsaorelate += itemm.Ratio;
+                    }
+                }
+                ratio = (motsaorelate + haisaorelate + basaorelate + bonsaorelate + namsaorelate) / rsrelate.Count();
+                arelate = ratio / 5 * 100;
+            }
+            <div class="col-4">
+                <a href="/Products/ChiTietSanPam/@item.IDProduct">
+                    @if(item.Image1 != null)
+                {
+                    <img src="~/Content/Images/@item.Image1">
+                }
+                else if(item.Image2 != null)
+                {
+                    <img src="~/Content/Images/@item.Image2">
+                }
+                else if(item.Image3 != null)
+                {
+                    <img src="~/Content/Images/@item.Image3">
+                }
+                else if(item.Image4 != null)
+                {
+                    <img src="~/Content/Images/@item.Image4">
+                }
+                else if(item.Image5 != null)
+                {
+                    <img src="~/Content/Images/@item.Image5">
+                }
+                <h4>@item.NameProduct</h4>
+                <div class="star">
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    </div>
+                    <div class="_star" style="width: @arelate%">
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    </div>
+                </div>
+                <p>@(string.Format("{0:#, ##0}", item.Price))$</p>
+                </a>
             </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-2.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-3.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-4.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <img src="~/images/product-5.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-6.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-7.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-8.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <img src="~/images/product-9.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-10.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-11.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
-        <div class="col-4">
-            <img src="~/images/product-12.jpg">
-            <h4>Red Printed T-Shirt</h4>
-            <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <p>$50.00</p>
-        </div>
+        }
     </div>
     <div class="page-btn">
         <span>1</span>
@@ -272,41 +512,37 @@
 </div>
 <!-- ------------------- js for toggle menu-------------- -->
 <script>
-            var MenuItems = document.getElementById("MenuItems");
+    var MenuItems = document.getElementById("MenuItems");
 
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px";
+        }
+        else {
             MenuItems.style.maxHeight = "0px";
-
-            function menutoggle() {
-                if (MenuItems.style.maxHeight == "0px") {
-                    MenuItems.style.maxHeight = "200px";
-                }
-                else {
-                    MenuItems.style.maxHeight = "0px";
-                }
-            }
+        }
+    }
 
 </script>
 
 <!-- ------------------- JS for  product gallery------------------------         -->
 <script>
-            var ProductImg = document.getElementById("productImg");
-            var SmallImg = document.getElementsByClassName("small-img");
+    var ProductImg = document.getElementById("productImg");
+    var SmallImg = document.getElementsByClassName("small-img");
 
-            SmallImg[0].onclick = function()
-            {
-                ProductImg.src = SmallImg[0].src;
-            }
-            SmallImg[1].onclick = function()
-            {
-                ProductImg.src = SmallImg[1].src;
-            }
-            SmallImg[2].onclick = function()
-            {
-                ProductImg.src = SmallImg[2].src;
-            }
-            SmallImg[3].onclick = function()
-            {
-                ProductImg.src = SmallImg[3].src;
-            }
+    SmallImg[0].onclick = function () {
+        ProductImg.src = SmallImg[0].src;
+    }
+    SmallImg[1].onclick = function () {
+        ProductImg.src = SmallImg[1].src;
+    }
+    SmallImg[2].onclick = function () {
+        ProductImg.src = SmallImg[2].src;
+    }
+    SmallImg[3].onclick = function () {
+        ProductImg.src = SmallImg[3].src;
+    }
 
 </script>

@@ -38,6 +38,7 @@ namespace WebBanQuanAo.Controllers
             cate = db.categories.Where(m => m.IDCategory == id).FirstOrDefault();
             db.categories.Remove(cate);
             db.SaveChanges();
+            ViewBag.a = "a";
             return RedirectToAction("Index");
         }
         [HttpGet]

@@ -3,4 +3,3 @@ D:\Huflit\TMDT\Do An\WebBanQuanAo\Common\bin\Debug\Common.pdb
 D:\Huflit\TMDT\Do An\WebBanQuanAo\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\Huflit\TMDT\Do An\WebBanQuanAo\Common\obj\Debug\Common.dll
 D:\Huflit\TMDT\Do An\WebBanQuanAo\Common\obj\Debug\Common.pdb
-D:\Huflit\TMDT\Do An\WebBanQuanAo\Common\obj\Debug\Common.csprojAssemblyReference.cache

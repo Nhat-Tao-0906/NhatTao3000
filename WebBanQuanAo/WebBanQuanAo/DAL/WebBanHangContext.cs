@@ -20,5 +20,6 @@ namespace WebBanQuanAo.DAL
         public DbSet<ChatLieu> chatLieus { get; set; }
         public DbSet<ThuongHieu> thuongHieus { get; set; }
         public DbSet<Size_Product> size_Products { get; set; }
+        public DbSet<Reviews> reviews { get; set; }
     }
 }

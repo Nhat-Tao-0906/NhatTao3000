@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -40,7 +41,6 @@ namespace WebBanQuanAo.Controllers
         }
         public ActionResult CapNhatTrangThai(int id)
         {
-            //int id = int.Parse(ViewBag.id);
             var cus = db.customer.Where(m => m.IDCus == id).FirstOrDefault();
             if (cus.Status == false)
                 cus.Status = true;
@@ -50,5 +50,68 @@ namespace WebBanQuanAo.Controllers
             db.SaveChanges();
             return RedirectToAction("DanhSachKhachHang");
         }
+        public ActionResult ThongTinKhachHang()
+        {
+            if (Session["idcusReview"] != null)
+            {
+                int id = int.Parse(Session["idcusReview"].ToString());
+                var cus = db.customer.Where(m => m.IDCus == id).FirstOrDefault();
+                return View(cus);
+            }
+            else
+                return RedirectToAction("Account", "Account");
+        }
+        public ActionResult EditCustomer(Customer cus, HttpPostedFileBase Image)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = int.Parse(Session["idcusReview"].ToString());
+                cus.IDCus = id;
+                if (Image != null)
+                {
+                    var filename = Path.GetFileName(Image.FileName);
+                    cus.Image = filename;
+                    string path1 = Path.Combine(Server.MapPath("~/Content/Images/"), filename);
+                    Image.SaveAs(path1);
+                }
+                else
+                {
+                    cus.Image = cus.Image;
+                }
+                db.Entry(cus).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }    
+            return RedirectToAction("ThongTinKhachHang");
+        }
+        [HttpPost]
+        public ActionResult ThayDoiMatKhau(FormCollection form)
+        {
+            int id = int.Parse(Session["idcusReview"].ToString());
+            var account = db.account.Where(m => m.IDCus == id).FirstOrDefault();
+            if (form["ConfirmPassWord"] != null && form["PassWord"] != null)
+            {
+                if (form["ConfirmPassWord"] == form["PassWord"])
+                {
+                    account.PassWord = form["PassWord"].ToString();
+                    account.ConfirmPassWord = form["ConfirmPassWord"].ToString();
+                    db.Entry(account).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.errorconfirm = "Mật khẩu nhập lại không đúng";
+                }
+            }
+            else
+            {
+                ViewBag.errorpassword = "Mật khẩu không được bỏ trống";
+                ViewBag.errorconfirmpassword = "Mật khẩu nhập lại không được bỏ trống";
+            }    
+            return RedirectToAction("ThongTinKhachHang");
+        }
+        //public PartialViewResult LichSuMuaHang()
+        //{
+        //    return PartialView("LichSuMuaHang");
+        //}
     }
 }

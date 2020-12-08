@@ -1,0 +1,70 @@
+﻿<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+<style>
+    i {
+        font-size: 20px !important;
+        transition: all 0.4s;
+    }
+
+    .single-product .fa {
+        margin: 0;
+    }
+
+    .star {
+        position: relative;
+        display: inline-block;
+    }
+
+        .star div:first-child {
+            display: inline-block;
+        }
+
+    ._star {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    input {
+        display: none;
+    }
+
+    /*input:checked ~ label i {
+            color: #ffd800 !important;
+            transition: all 0.4s;
+        }*/
+</style>
+<div class="star">
+
+    <div>
+        <input type="radio" name="" id="" />
+        <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+    </div>
+    <div class="_star">
+        <input type="radio" name="" id="" />
+        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="" id="" />
+        <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+    </div>
+
+</div>
+<p style="display:inline-block">(50)</p>

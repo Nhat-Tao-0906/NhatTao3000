@@ -1,8 +1,87 @@
 ﻿@model IEnumerable<WebBanQuanAo.Models.Product>
+@using WebBanQuanAo.DAL;
+@using WebBanQuanAo.Models;
 @{
     ViewBag.Title = "Ao";
     Layout = "~/Views/Shared/_Layout_Client.cshtml";
 }
+
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@{ 
+    WebBanHangContext db = new WebBanHangContext();
+} 
+
+<style>
+    i {
+        font-size: 20px !important;
+        transition: all 0.4s;
+    }
+
+    .star {
+        position: relative;
+        display: inline-block;
+    }
+
+        .star div:first-child {
+            display: inline-block;
+        }
+
+    ._star {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /*    width: 50%;*/
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .fa-star {
+        color: #ffd800;
+    }
+
+    .single-product .fa {
+        margin-left: 0;
+    }
+
+    input {
+        display: none;
+    }
+
+    .ratio {
+        display: inline-block;
+        width: 166px;
+        height: 6px;
+        background-color: rgb(238, 238, 238);
+        position: relative;
+        z-index: 1;
+        margin: 0px 6px;
+        border-radius: 99em;
+    }
+
+    .subratio {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        background-color: rgb(120, 120, 120);
+        border-radius: 99em;
+    }
+    /*
+    #i {
+        font-size: 50px !important;
+        transition: all 0.4s;
+    }*/
+    #div_input input {
+        display: none;
+    }
+
+        #div_input input:checked ~ #label i {
+            color: #ffd800 !important;
+            transition: all 0.4s;
+        }
+</style>
 
 <body>
     <div class="small-container">
@@ -21,16 +100,78 @@
         <div class="row">
             @foreach (var item in Model)
             {
+                double a = 0;
+                double motsao = 0;
+                double haisao = 0;
+                double basao = 0;
+                double bonsao = 0;
+                double namsao = 0;
+                double ratio = 0;
+                var rs = from l in db.reviews where item.IDProduct == l.IDProduct select l;
+                if (rs.Count() > 0)
+                {
+                    foreach (var itemm in rs)
+                    {
+                        if (itemm.Ratio == 1)
+                        {
+                            motsao += itemm.Ratio;
+                        }
+                        else if (itemm.Ratio == 2)
+                        {
+                            haisao += itemm.Ratio;
+                        }
+                        else if (itemm.Ratio == 3)
+                        {
+                            basao += itemm.Ratio;
+                        }
+                        else if (itemm.Ratio == 4)
+                        {
+                            bonsao += itemm.Ratio;
+                        }
+                        else if (itemm.Ratio == 5)
+                        {
+                            namsao += itemm.Ratio;
+                        }
+                    }
+                    ratio = (motsao + haisao + basao + bonsao + namsao) / rs.Count();
+                    a = ratio / 5 * 100;
+                }
                 <div class="col-4">
                     <a href="/Products/ChiTietSanPam/@item.IDProduct"><img src="~/Content/Images/@item.Image1"></a>
                     <h4>@item.NameProduct</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
+                    <div class="star">
+                        <div>
+                            <input type="radio" name="" id="" />
+                            <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        </div>
+                        <div class="_star" style="width: @a%">
+                            <input type="radio" name="" id="" />
+                            <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                            <input type="radio" name="" id="" />
+                            <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        </div>
                     </div>
+                    @*<div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>*@
                     <p>$@item.Price</p>
                 </div>
             }

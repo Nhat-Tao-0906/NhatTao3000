@@ -8,6 +8,7 @@ using WebBanQuanAo.DAL;
 using System.IO;
 using WebBanQuanAo.Class;
 using PagedList;
+using System.Web.Routing;
 
 namespace WebBanQuanAo.Controllers
 {
@@ -328,6 +329,51 @@ namespace WebBanQuanAo.Controllers
         [HttpGet]
         public ActionResult ChiTietSanPam(int id)
         {
+            double motsao = 0;
+            double haisao = 0;
+            double basao = 0;
+            double bonsao = 0;
+            double namsao = 0;
+
+            Reviews r = new Reviews();
+            
+            var result = from l in db.reviews
+                         where l.IDProduct == id
+                         select l;
+            if (result.Count() > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (item.Ratio == 1)
+                        motsao++;
+                    else if (item.Ratio == 2)
+                        haisao++;
+                    else if (item.Ratio == 3)
+                        basao++;
+                    else if (item.Ratio == 4)
+                        bonsao++;
+                    else if (item.Ratio == 5)
+                        namsao++;
+                }
+                ViewBag.ratio = (motsao + (haisao * 2) + (basao * 3) + (bonsao * 4) + (namsao * 5)) / result.Count();
+                ViewBag.count = result.Count();
+                ViewBag.motsao = motsao;
+                ViewBag.haisao = haisao;
+                ViewBag.basao = basao;
+                ViewBag.bonsao = bonsao;
+                ViewBag.namsao = namsao;
+            }
+            else
+            {
+                ViewBag.ratio = 0;
+                ViewBag.count = 1;
+                ViewBag.motsao = 0;
+                ViewBag.haisao = 0;
+                ViewBag.basao = 0;
+                ViewBag.bonsao = 0;
+                ViewBag.namsao = 0;
+            }
+            
             Session["IDPro"] = id;
             List<Size_Product> listsize = new List<Size_Product>();
             foreach (var item in db.size_Products)
@@ -352,6 +398,43 @@ namespace WebBanQuanAo.Controllers
                 return View(listpro);
             }
             return View();
+        }
+        public PartialViewResult Reviews()
+        {
+            return PartialView("Reviews");
+        }
+        public ActionResult FormDanhGia(FormCollection form)
+        {
+            int id = int.Parse(Session["IDPro"].ToString());
+            int idcus = int.Parse(Session["idcusReview"].ToString());
+            if (Session["idcusReview"] != null)
+            {
+                var bill = db.Bill.Where(m => m.IDCus == idcus).FirstOrDefault();
+                if (bill != null)
+                {
+                    var review = db.reviews.Where(m => m.IDCus == idcus).FirstOrDefault();
+                    if (review == null)
+                    {
+                        Reviews r = new Reviews();
+                        r.IDCus = idcus;
+                        r.IDProduct = id;
+                        r.Content = form["Content"];
+                        r.Ratio = int.Parse(form["Ratio"].ToString());
+                        r.DateReview = DateTime.Now;
+                        db.reviews.Add(r);
+                        db.SaveChanges();
+                        
+                    }
+                    else
+                    {
+                        // Thong bao da danh gia 
+                        return View();
+                    }
+                }
+            }
+            else
+                return RedirectToAction("Login", "Account");
+            return RedirectToAction("ChiTietSanPam", new RouteValueDictionary(new { controller = "Products", action = "ChiTietSanPam", Id = id }));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@using WebBanQuanAo.Models
+@using WebBanQuanAo.DAL
 @{ 
-
+    WebBanHangContext db = new WebBanHangContext();
     List<Category> listcate = (List<Category>) Session["menu"];
 }
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
                 <div class="logo">
                     <a href="index.html"><img src="~/images/logo.png" width="125px"></a>
                 </div>
-                <nav>
+                <nav style="margin-top:5px;">
                     <ul id="MenuItems">
                         <li><a href="index.html">Home</a></li>
                         @{
@@ -33,12 +34,27 @@
                             }
                         }
                         <li><a href="/Shopping/TraCuuDonHang">Tra cứu đơn hàng</a></li>
-                        <li><a href="/Account/Account">Account</a></li>
                     </ul>
                 </nav>
+                <div style="margin-right:15px; text-align:center;">
+                    <a href="/Account/Account">
+                        <img src="~/images/account.png" width="35px" height="35px" style="margin-bottom:-5px; width:30px; height: 30px;" />
+                        @if (Session["idcusReview"] == null)
+                        {
+                            <p>Xin chào</p>
+                        }
+                        else
+                        {
+                            int id = int.Parse(Session["idcusReview"].ToString());
+                            var cus = db.customer.Where(m => m.IDCus == id).FirstOrDefault();
+                            <p>Hi! @cus.Name</p>
+                        }
+                    </a>
+                </div>
                 <a href="/Shopping/GioHang">
-                    <img src="~/images/cart.png" width="35px" height="35px" style="margin-bottom:-4px;">
-                    @Html.Action("BagCart","Shopping")
+                    <img src="~/images/cart.png" width="30px" height="30px" style="margin-bottom:-4px; margin-left:15px;">
+                    @Html.Action("BagCart", "Shopping")
+                    <p>Giỏ hàng</p>
                     @*<span>0</span>*@
                 </a>
                 <img src="~/images/menu.png" class="menu-icon"

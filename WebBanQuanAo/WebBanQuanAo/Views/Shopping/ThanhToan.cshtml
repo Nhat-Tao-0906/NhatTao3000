@@ -1,5 +1,21 @@
 ﻿@using WebBanQuanAo.Class;
 
+@model WebBanQuanAo.Models.Customer
+
+@{ 
+    var name = "";
+    var email = "";
+    var phone = "";
+    var address = "";
+    if (Model != null)
+    {
+        name = Model.Name;
+        email = Model.Email;
+        phone = Model.Phone;
+        address = Model.Address;
+    }
+}
+
 @{
     ViewBag.Title = "ThanhToan";
     Layout = "~/Views/Shared/_Layout_Client.cshtml";
@@ -23,7 +39,7 @@
                         <div class="col-lg-12">
                             <h3>Thông tin giao hàng</h3>
                             <div class="form-group">
-                                <input style="border-radius:4px; height:40px;" name="Name" type="text" class="form-control" placeholder="Họ và tên" value="">
+                                <input style="border-radius:4px; height:40px;" name="Name" type="text" class="form-control" placeholder="Họ và tên" value="@name">
                                 @if(ViewBag.errorName != null){
                                     <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorName</div>
                                 }
@@ -33,7 +49,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <input style="border-radius:4px; height:40px;" name="Email" type="text" class="form-control" placeholder="Email">
+                                <input style="border-radius:4px; height:40px;" name="Email" type="text" class="form-control" placeholder="Email" value="@email">
                                 @if (ViewBag.errorEmail != null)
                                 {
                                     <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorEmail</div>
@@ -42,7 +58,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <input style="border-radius:4px; height:40px;" name="Phone" type="text" class="form-control" placeholder="Số điện thoại">
+                                <input style="border-radius:4px; height:40px;" name="Phone" type="text" class="form-control" placeholder="Số điện thoại" value="@phone">
                                 @if (ViewBag.errorPhone != null)
                                 {
                                     <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorPhone</div>
@@ -53,7 +69,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input style="border-radius:4px; height:40px;" name="Address" type="text" class="form-control" placeholder="Địa chỉ">
+                                <input style="border-radius:4px; height:40px;" name="Address" type="text" class="form-control" placeholder="Địa chỉ" value="@address">
                                 @if (ViewBag.errorAddress != null)
                                 {
                                     <div style="font-size:13px; color:rgb(255, 0, 0)">@ViewBag.errorAddress</div>
@@ -175,3 +191,16 @@
 <br />
 <br />
 <br />
+
+@{ 
+    if (ViewBag.errorbanner != "")
+    {
+        <input id="isStatus" type="text" value="@ViewBag.errorbanner" />
+    }
+}
+<script>
+    var idstatus = document.getElementById('isStatus');
+    if (idstatus.value != "") {
+        alert('Bạn đã bị cấm mua hàng tại web');
+    }
+</script>
