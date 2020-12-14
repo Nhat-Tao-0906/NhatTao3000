@@ -514,5 +514,14 @@ namespace WebBanQuanAo.Controllers
             Session["ChiTietDonHang"] = lbd;
             return PartialView("ChiTietDonHang");
         }
+        public ActionResult HuyDon()
+        {
+            int id = (Session["ThongTinDonHang"] as Bill).IDBill;
+            var bill = db.Bill.Where(m => m.IDBill == id).FirstOrDefault();
+            bill.OrderStatus = 0;
+            db.Entry(bill).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("ThongTinDonHang");
+        }
     }
 }

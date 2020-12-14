@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebBanQuanAo.Models.Product>
+﻿@*@model IEnumerable<WebBanQuanAo.Models.Product>*@
+@model PagedList.IPagedList<WebBanQuanAo.Models.Product>
+@using PagedList.Mvc;
 @using WebBanQuanAo.DAL;
 @using WebBanQuanAo.Models;
 @{
@@ -9,9 +11,14 @@
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-@{ 
+@{
     WebBanHangContext db = new WebBanHangContext();
-} 
+    List<SelectListItem> filter = new List<SelectListItem>();
+    filter.Add(new SelectListItem { Text = "Mặc định", Value = "0" });
+    filter.Add(new SelectListItem { Text = "Giá tăng dần", Value = "1" });
+    filter.Add(new SelectListItem { Text = "Giá giảm dần", Value = "2" });
+    filter.Add(new SelectListItem { Text = "Đánh giá", Value = "3" });
+}
 
 <style>
     i {
@@ -87,14 +94,13 @@
     <div class="small-container">
 
         <div class="row row-2">
-            <h2>All Products</h2>
-            <select>
-                <option>Default Shop</option>
-                <option>Short by price</option>
-                <option>Short by popularity</option>
-                <option>Short by Rating</option>
-                <option>Short by Sale</option>
-            </select>
+            <h2>Danh sách sản phẩm</h2>
+            @using (Html.BeginForm("ListProduct", "Products", FormMethod.Get))
+            {
+                <p>
+                    @Html.DropDownList("filter", (List<SelectListItem>)filter, new { @onchange = "this.form.submit();" })
+                </p>
+            }
         </div>
 
         <div class="row">
@@ -137,7 +143,7 @@
                     a = ratio / 5 * 100;
                 }
                 <div class="col-4">
-                    <a href="/Products/ChiTietSanPam/@item.IDProduct"><img src="~/Content/Images/@item.Image1"></a>
+                    <a href="/Products/ChiTietSanPam/@item.IDProduct"><img src="~/Content/Images/@item.Image1" style="width: 237px; height:237px;"></a>
                     <h4>@item.NameProduct</h4>
                     <div class="star">
                         <div>
@@ -166,22 +172,37 @@
                         </div>
                     </div>
                     @*<div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>*@
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>*@
                     <p>$@item.Price</p>
                 </div>
             }
         </div>
-        <div class="page-btn">
+        @*<div class="page-btn">
             <span>1</span>
             <span>2</span>
             <span>3</span>
             <span>4</span>
             <span>&#8594;</span>
+        </div>*@
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6" style="margin-left:0;">
+                @using (Html.BeginForm("ListProduct", "Products", FormMethod.Get))
+                {
+                    <p>
+                        Kích thước trang: @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
+                    </p>
+                }
+            </div>
+            <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+                Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+            </div>
         </div>
+
+        @Html.PagedListPager(Model, page => Url.Action("ListProduct", new { page, size = ViewBag.currentSize }))
     </div>
 </body>

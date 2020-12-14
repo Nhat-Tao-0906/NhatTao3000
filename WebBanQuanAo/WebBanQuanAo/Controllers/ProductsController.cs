@@ -384,20 +384,56 @@ namespace WebBanQuanAo.Controllers
             ViewBag.listsize = listsize;
             return View(db.products.Where(m => m.IDProduct == id).FirstOrDefault());
         }
-        public ActionResult ListProduct(int id)
+        public ActionResult ListProduct(int id, int? size, int? page, int? filter)
         {
-            List<Product> listpro = new List<Product>();
-            var cate = db.categories.Where(m => m.IDCategory == id).FirstOrDefault();
-            if (cate != null)
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "5", Value = "5" });
+            items.Add(new SelectListItem { Text = "10", Value = "10" });
+            items.Add(new SelectListItem { Text = "20", Value = "20" });
+            items.Add(new SelectListItem { Text = "25", Value = "25" });
+            items.Add(new SelectListItem { Text = "50", Value = "50" });
+            items.Add(new SelectListItem { Text = "100", Value = "100" });
+            items.Add(new SelectListItem { Text = "200", Value = "200" });
+            //List<SelectListItem> filter = new List<SelectListItem>();
+            //filter.Add(new SelectListItem { Text = "0", Value = "Default Shop" });
+            //foreach (var item in filter)
+            //{
+            //    if (item.Value == size.ToString()) item.Selected = true;
+            //}
+            foreach (var item in items)
             {
-                foreach (var sp in db.products.ToList())
-                {
-                    if (sp.IDCategory == cate.IDCategory)
-                        listpro.Add(sp);
-                }
-                return View(listpro);
+                if (item.Value == size.ToString()) item.Selected = true;
             }
-            return View();
+            ViewBag.size = items;
+            ViewBag.currentSize = size;
+            page = page ?? 1;
+            var ListPro = (from l in db.products where l.IDCategory == id select l).OrderBy(x => x.IDProduct);
+            if (filter == 1)
+            {
+                ListPro = (from l in db.products where l.IDCategory == id select l).OrderBy(x => x.Price);
+            }
+            else if(filter == 2)
+            {
+                ListPro = (from l in db.products where l.IDCategory == id select l).OrderByDescending(x => x.Price);
+            }
+            //if (!string.IsNullOrEmpty(strSearch))
+            //    ListBill = (from l in db.Bill select l).OrderBy(x => x.IDBill);
+            int pageSize = (size ?? 5);
+            int pageNumber = (page ?? 1);
+
+            //----
+            //List<Product> listpro = new List<Product>();
+            //var cate = db.categories.Where(m => m.IDCategory == id).FirstOrDefault();
+            //if (cate != null)
+            //{
+            //    foreach (var sp in db.products.ToList())
+            //    {
+            //        if (sp.IDCategory == cate.IDCategory)
+            //            listpro.Add(sp);
+            //    }
+            //    return View(listpro);
+            //}
+            return View(ListPro.ToPagedList(pageNumber, pageSize));
         }
         public PartialViewResult Reviews()
         {

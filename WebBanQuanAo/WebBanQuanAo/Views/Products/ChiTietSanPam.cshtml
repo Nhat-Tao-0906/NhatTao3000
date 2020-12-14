@@ -158,7 +158,6 @@
             <h2 style="margin:5px 0">@Model.NameProduct</h2>
 
             <h4 style="margin:0 0 5px 0!important">@(string.Format("{0:#, ##0}", Model.Price))$</h4>
-            @*@Html.Action("Reviews")*@
             <div class="star">
                 <div>
                     <input type="radio" name="" id="" />
@@ -353,46 +352,48 @@
                 </div>
 
             </div>
-            <div class="row">
-                <h2 style="display:block">Đánh giá</h2>
+            @if (Session["idcusReview"] != null)
+            {
+                <div class="row">
+                    <h2 style="display:block">Đánh giá</h2>
+                    <br />
+                </div>
                 <br />
-
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-lg-4">
-                    <img src="~/images/anh-dai-dien-FB-200.jpg" style="width:60px;  height: 60px; border-radius:30px;" />
-                    <div style="display:inline-block">
-                        <h4 style="margin-left:10px;">Ten</h4>
-                        <div>
-                            <img src="~/images/check.png" style="width:20px;  height: 20px; border-radius:3px; margin-left:10px; margin-bottom:-5px;" />
-                            <div style="display:inline-block">Đã mua sản phẩm này</div>
+                <div class="row">
+                    <div class="col-lg-4" style="display:inherit">
+                        <img src="~/images/anh-dai-dien-FB-200.jpg" style="width:60px;  height: 60px; border-radius:30px;" />
+                        <div style="display:inline-block">
+                            <h4 style="margin-left:10px;">Ten</h4>
+                            <div>
+                                <img src="~/images/check.png" style="width:20px;  height: 20px; border-radius:3px; margin-left:10px; margin-bottom:-5px;" />
+                                <div style="display:inline-block">Đã mua sản phẩm này</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    @using (Html.BeginForm("FormDanhGia", "Products", FormMethod.Post))
-                    {
-                        <div id="div_input" style="display:flex;flex-direction:row-reverse; display:inline-flex">
-                            <input type="radio" name="Ratio" id="Star5" value="5" />
-                            <label for="Star5" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
-                            <input type="radio" name="Ratio" id="Star4" value="4" />
-                            <label for="Star4" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
-                            <input type="radio" name="Ratio" id="Star3" value="3" />
-                            <label for="Star3" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
-                            <input type="radio" name="Ratio" id="Star2" value="2" />
-                            <label for="Star2" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
-                            <input type="radio" name="Ratio" id="Star1" value="1" checked="checked" />
-                            <label for="Star1" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
-                        </div>
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("FormDanhGia", "Products", FormMethod.Post))
+                        {
+                            <div id="div_input" style="display:flex;flex-direction:row-reverse; display:inline-flex">
+                                <input type="radio" name="Ratio" id="Star5" value="5" />
+                                <label for="Star5" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                                <input type="radio" name="Ratio" id="Star4" value="4" />
+                                <label for="Star4" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                                <input type="radio" name="Ratio" id="Star3" value="3" />
+                                <label for="Star3" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                                <input type="radio" name="Ratio" id="Star2" value="2" />
+                                <label for="Star2" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                                <input type="radio" name="Ratio" id="Star1" value="1" checked="checked" />
+                                <label for="Star1" id="label"><i class="fa fa-star" style="color:#808080"></i></label>
+                            </div>
 
-                        <div class="form-group">
-                            <input name="Content" style="display:unset; height: 60px; border-radius:3px;" type="text" placeholder="Nội dung" />
-                            <input type="submit" class="btn btn-primary" value="Gửi" />
-                        </div>
-                    }
+                            <div class="form-group">
+                                <input name="Content" style="display:unset; height: 60px; border-radius:3px;" type="text" placeholder="Nội dung" />
+                                <input type="submit" class="btn btn-primary" value="Gửi" />
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -400,7 +401,7 @@
 
 <!-- ----- title------------- -->
 <div class="small-container">
-    <div class="row row2" style="justify-content: space-around;">
+    <div class="row row2" style="justify-content: space-around; margin: 30px 0">
         <h2>Relate Products</h2>
         <p>View More</p>
     </div>
@@ -502,13 +503,13 @@
             </div>
         }
     </div>
-    <div class="page-btn">
+    @*<div class="page-btn">
         <span>1</span>
         <span>2</span>
         <span>3</span>
         <span>4</span>
         <span>&#8594;</span>
-    </div>
+    </div>*@
 </div>
 <!-- ------------------- js for toggle menu-------------- -->
 <script>

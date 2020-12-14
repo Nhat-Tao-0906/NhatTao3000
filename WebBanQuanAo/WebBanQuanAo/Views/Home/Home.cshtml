@@ -1,8 +1,96 @@
 ﻿@model IEnumerable<WebBanQuanAo.Models.Product>
+@using WebBanQuanAo.Models;
+@using WebBanQuanAo.DAL;
+
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout_Client.cshtml";
 }
+
+@{ 
+    WebBanHangContext db = new WebBanHangContext();
+    List<Reviews> listReviews = new List<Reviews>();
+    int i = 0;
+    foreach(var item in db.reviews)
+    {
+        listReviews.Add(item);
+        i++;
+        if (i > 2)
+        {
+            break;
+        }
+    }
+}
+
+<style>
+    i {
+        font-size: 20px !important;
+        transition: all 0.4s;
+    }
+
+    .star {
+        position: relative;
+        display: inline-block;
+    }
+
+        .star div:first-child {
+            display: inline-block;
+        }
+
+    ._star {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /*    width: 50%;*/
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .fa-star {
+        color: #ffd800;
+    }
+
+    .single-product .fa {
+        margin-left: 0;
+    }
+
+    input {
+        display: none;
+    }
+
+    .ratio {
+        display: inline-block;
+        width: 166px;
+        height: 6px;
+        background-color: rgb(238, 238, 238);
+        position: relative;
+        z-index: 1;
+        margin: 0px 6px;
+        border-radius: 99em;
+    }
+
+    .subratio {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        background-color: rgb(120, 120, 120);
+        border-radius: 99em;
+    }
+    /*
+    #i {
+        font-size: 50px !important;
+        transition: all 0.4s;
+    }*/
+    #div_input input {
+        display: none;
+    }
+
+        #div_input input:checked ~ #label i {
+            color: #ffd800 !important;
+            transition: all 0.4s;
+        }
+</style>
 
 <div class="header1">
     <div class="container">
@@ -43,12 +131,12 @@
 </div>
 <!-- ------------- featured products ---------------- -->
 <div class="small-container">
-    <h2 class="title">Featured Products</h2>
+    <h2 class="title">Sản phẩm mới nhất</h2>
     <div class="row">
 
         @{Html.RenderAction("FeaturedProducts", "Home");}
     </div>
-    <h2 class="title">Latest Products</h2>
+    <h2 class="title">Sản phẩm nổi bật</h2>
     <div class="row">
         <div class="col-4">
             <img src="~/images/product-5.jpg">
@@ -172,57 +260,83 @@
 <div class="testimonial">
     <div class="small-container">
         <div class="row">
+            @foreach (var item in listReviews)
+            {
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <p>
-                    Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                    Removal request delight if on he we
+                    @item.Content
                 </p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+                @{ 
+                    double a = double.Parse(item.Ratio.ToString()) * 100 / 5;
+                }
+                <div class="star">
+                    <div>
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star-o" style="color: #ffd800;" aria-hidden="true"></i></label>
+                    </div>
+                    <div class="_star" style="width: @a%">
+                        <input type="radio" name="" id="" />
+                        <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                        <input type="radio" name="" id="" />
+                        <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                    </div>
                 </div>
-                <img src="~/images/user-1.png">
-                <h3>Đạt 1 Phích</h3>
+                @{
+                    var cus = db.customer.Where(m => m.IDCus == item.IDCus).FirstOrDefault();
+                }
+                <img src="~/Content/Images/@cus.Image" style="display:block; margin:10px auto">
+                <h3>@cus.Name</h3>
             </div>
-            <div class="col-3">
-                <i class="fa fa-qoute-lef"></i>
-                <p>
-                    Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                    Removal request delight if on he we
-                </p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <img src="~/images/user-2.png">
-                <h3>An Nguyen</h3>
+            }
+            @*<div class="col-3">
+            <i class="fa fa-qoute-lef"></i>
+            <p>
+                Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
+                imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
+                Removal request delight if on he we
+            </p>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
             </div>
-            <div class="col-3">
-                <i class="fa fa-qoute-lef"></i>
-                <p>
-                    Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                    Removal request delight if on he we
-                </p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <img src="~/images/user-3.png">
-                <h3>Quang Hoang</h3>
+            <img src="~/images/user-2.png">
+            <h3>An Nguyen</h3>
+        </div>
+        <div class="col-3">
+            <i class="fa fa-qoute-lef"></i>
+            <p>
+                Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
+                imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
+                Removal request delight if on he we
+            </p>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
             </div>
+            <img src="~/images/user-3.png">
+            <h3>Quang Hoang</h3>
+        </div>*@
         </div>
     </div>
-</div
+</div>
